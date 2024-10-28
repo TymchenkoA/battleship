@@ -1,4 +1,5 @@
 import usersDB from "../db/users.js";
+import sessionsDB from "../db/sessions.js";
 
 export const handleRegistration = (data, socket) => {
   const { name, password } = JSON.parse(data);
@@ -6,7 +7,7 @@ export const handleRegistration = (data, socket) => {
   if (!name || !password) {
     socket.send(
       JSON.stringify({
-        originalCommand: { type: "reg", data: JSON.parse(data) },
+        // originalCommand: { type: "reg", data: JSON.parse(data) },
         type: "reg",
         data: JSON.stringify({
           name: "",
@@ -26,7 +27,7 @@ export const handleRegistration = (data, socket) => {
   if (registrationResult.error) {
     socket.send(
       JSON.stringify({
-        originalCommand: { type: "reg", data: JSON.parse(data) },
+        // originalCommand: { type: "reg", data: JSON.parse(data) },
         type: "reg",
         data: JSON.stringify({
           name,
@@ -40,10 +41,11 @@ export const handleRegistration = (data, socket) => {
   } else {
     const newUser = registrationResult.user;
 
-    console.log(newUser);
+    sessionsDB.addSession(socket, newUser.id);
+
     socket.send(
       JSON.stringify({
-        originalCommand: { type: "reg", data: JSON.parse(data) },
+        // originalCommand: { type: "reg", data: JSON.parse(data) },
         type: "reg",
         data: JSON.stringify({
           name: newUser.name,

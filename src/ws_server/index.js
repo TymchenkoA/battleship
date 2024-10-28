@@ -1,8 +1,10 @@
 import { WebSocketServer } from "ws";
 import { requestHandler } from "../handlers/requestHandler.js";
 
+export let wsServer;
+
 export function startWsServer(wsServerPort) {
-  const wsServer = new WebSocketServer({ port: wsServerPort });
+  wsServer = new WebSocketServer({ port: wsServerPort });
 
   wsServer.on("connection", (socket) => {
     console.log("New WebSocket connection established");
@@ -15,10 +17,6 @@ export function startWsServer(wsServerPort) {
         console.error("Failed to parse message:", error);
         socket.send(JSON.stringify({ error: "Invalid message format" }));
       }
-    });
-
-    socket.on("message", (message) => {
-      requestHandler(message);
     });
 
     socket.on("close", () => {

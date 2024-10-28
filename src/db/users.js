@@ -38,6 +38,11 @@ class UsersDatabase {
   getAllUsers() {
     return this.users;
   }
+
+  getUserName(id) {
+    const user = this.users.find((user) => user.id === id);
+    return user.name;
+  }
 }
 
 export default new UsersDatabase();
