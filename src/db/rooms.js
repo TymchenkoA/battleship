@@ -9,6 +9,7 @@ class Room {
 
   addPlayer(playerId) {
     if (this.roomUsers.length >= 2) return false;
+    if (this.roomUsers.indexOf(playerId) !== -1) return false;
     this.roomUsers.push(playerId);
     this.isAvailable = this.roomUsers.length < 2;
     return true;
@@ -38,6 +39,11 @@ class RoomsDatabase {
 
   getAvailableRooms() {
     return this.rooms;
+  }
+
+  deleteRoom(roomId) {
+    const updatedRooms = this.rooms.filter(room => room.roomId !== roomId);
+    this.rooms = updatedRooms;
   }
 }
 

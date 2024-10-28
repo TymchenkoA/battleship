@@ -11,6 +11,15 @@ class SessionsDatabase {
     return this.sessions.get(socket) || null;
   }
 
+  getSocketByUserId(userId) {
+    for (const [socket, id] of this.sessions.entries()) {
+      if (id === userId) {
+        return socket;
+      }
+    }
+    return null;
+  }
+
   removeSession(socket) {
     this.sessions.delete(socket);
   }
