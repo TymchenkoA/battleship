@@ -15,20 +15,22 @@
 ## General project description
 This is battleship game with backend that uses websocket.
 
-The backend is be able to do the following:
+The backend is able to do the following:
 
-Start websocket server
-Handle websocket connection
-Handle player requests
-Handle room requests
-Handle ships requests
-Handle game requests
+    Start websocket server
+    Handle websocket connection
+    Handle player requests
+    Handle room requests
+    Handle ships requests
+    Handle game requests
 
 ### The backend should have 3 types of response:
 
 1. personal response
+
     reg - player registration/login
 2. response for the game room
+
     create_game - game id and player id (unique id for user in this game)
     start_game - informationa about game and player's ships positions
     turn - who is shooting now
