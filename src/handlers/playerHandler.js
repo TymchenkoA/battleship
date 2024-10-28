@@ -1,4 +1,5 @@
 import usersDB from "../db/users.js";
+import winnersDB from '../db/winners.js';
 import sessionsDB from "../db/sessions.js";
 
 export const handleRegistration = (data, socket) => {
@@ -42,6 +43,8 @@ export const handleRegistration = (data, socket) => {
     const newUser = registrationResult.user;
 
     sessionsDB.addSession(socket, newUser.id);
+
+    winnersDB.initializeUser(newUser.id);
 
     socket.send(
       JSON.stringify({

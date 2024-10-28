@@ -1,5 +1,6 @@
 import roomsDB from "../db/rooms.js";
 import usersDB from "../db/users.js";
+import gamesDB from "../db/games.js";
 import sessionsDB from "../db/sessions.js";
 import { broadcastToAll } from "../utils/broadcast.js";
 
@@ -42,13 +43,15 @@ export const addUserToRoom = (data, socket) => {
 
   roomsDB.addPlayerToRoom(indexRoom, userId);
 
+  const game = gamesDB.createGame(indexRoom, room.roomUsers);
+
   room.roomUsers.forEach(playerId => {
     const playerSocket = sessionsDB.getSocketByUserId(playerId);
     if (playerSocket) {
       playerSocket.send(JSON.stringify({
         type: 'create_game',
         data: JSON.stringify({
-          idGame: indexRoom,
+          idGame: game.id,
           idPlayer: playerId,
         }),
         id: 0,
